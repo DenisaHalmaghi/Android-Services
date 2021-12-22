@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lucrarea6">
         <service
-            android:name=".StartService"
+            android:name=".BoundService"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".StartService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
             android:name=".MainActivity"
