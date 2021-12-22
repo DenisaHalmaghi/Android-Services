@@ -14,9 +14,29 @@ public class BoundService extends Service {
     private final IBinder binder = (IBinder) new LocalBinder();
 
     public HashSet<String> union(HashSet<String> crowdA, HashSet<String> crowdB) {
-        crowdA.addAll(crowdB);
+        HashSet<String> clone = (HashSet<String>) crowdA.clone();
+        clone.addAll(crowdB);
 
-        return crowdA;
+        return clone;
+    }
+
+    public HashSet<String> intersection(HashSet<String> crowdA, HashSet<String> crowdB) {
+        HashSet<String> clone = (HashSet<String>) crowdA.clone();
+
+        clone.retainAll(crowdB);
+        return clone;
+    }
+
+    public HashSet<String> differrence(HashSet<String> crowdA, HashSet<String> crowdB) {
+        HashSet<String> clone = (HashSet<String>) crowdA.clone();
+
+        clone.removeAll(crowdB);
+
+        return clone;
+    }
+
+    public HashSet<String> symetricDifferrence(HashSet<String> crowdA, HashSet<String> crowdB) {
+        return union(differrence(crowdA,crowdB), differrence(crowdB,crowdA));
     }
 
     public class LocalBinder extends Binder {

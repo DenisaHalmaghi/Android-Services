@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ServiceConnection connection = new ServiceConnection() {
-        EditText a,b;
-
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             BoundService.LocalBinder binder = (BoundService.LocalBinder) service;
@@ -49,16 +47,35 @@ public class MainActivity extends AppCompatActivity {
             isBound = true;
 
             Button unionButton = findViewById(R.id.unionButton);
+            Button intersectionButton = findViewById(R.id.intersectionButton);
+            Button differenceButton = findViewById(R.id.differenceButton);
+            Button symetricDifferenceButton = findViewById(R.id.symetricDifferenceButton);
+
             TextView resultView = findViewById(R.id.resultView);
 
-            a = findViewById(R.id.aEditText);
-            b = findViewById(R.id.bEditText);
+            EditText a = findViewById(R.id.aEditText);
+            EditText b = findViewById(R.id.bEditText);
 
             HashSet<String> crowdA = stringToHashSet(a.getText().toString());
             HashSet<String> crowdB = stringToHashSet(b.getText().toString());
 
             unionButton.setOnClickListener(v -> {
                 HashSet<String> result = localService.union(crowdA,crowdB);
+                resultView.setText(result.toString());
+            });
+
+            intersectionButton.setOnClickListener(v -> {
+                HashSet<String> result = localService.intersection(crowdA,crowdB);
+                resultView.setText(result.toString());
+            });
+
+            differenceButton.setOnClickListener(v -> {
+                HashSet<String> result = localService.differrence(crowdA,crowdB);
+                resultView.setText(result.toString());
+            });
+
+            symetricDifferenceButton.setOnClickListener(v -> {
+                HashSet<String> result = localService.symetricDifferrence(crowdA,crowdB);
                 resultView.setText(result.toString());
             });
         }
@@ -81,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
             //remove listeners
             findViewById(R.id.unionButton).setOnClickListener(null);
+            findViewById(R.id.intersectionButton).setOnClickListener(null);
+            findViewById(R.id.differenceButton).setOnClickListener(null);
+            findViewById(R.id.symetricDifferenceButton).setOnClickListener(null);
         }
     };
 
